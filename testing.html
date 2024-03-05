@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Styled Autocomplete Input</title>
+        <style>
+            /* Style the input */
+            .autocomplete,
+            .autocomplete-items {
+                box-sizing: border-box;
+                width: 300px;
+            }
+
+            .autocomplete {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            /* Style the dropdown */
+            .autocomplete-items {
+                position: absolute;
+                border: 1px solid #ccc;
+                border-top: none;
+                border-radius: 0 0 5px 5px;
+                z-index: 99;
+                margin-top: 0; /* You can adjust this to position the dropdown properly */
+                background-color: #fff;
+            }
+
+            /* Style each item in the dropdown */
+            .autocomplete-items div {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            /* Style the selected item */
+            .autocomplete-items div:hover {
+                background-color: #f1f1f1;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Styled Autocomplete Input</h2>
+
+        <!-- The autocomplete input -->
+        <input
+            type="text"
+            class="autocomplete"
+            id="myInput"
+            placeholder="Type something..."
+        />
+
+        <!-- Dummy list for demonstration -->
+        <div id="autocomplete-list" class="autocomplete-items" hidden>
+            <div>Apple</div>
+            <div>Orange</div>
+            <div>Banana</div>
+            <div>Pineapple</div>
+        </div>
+
+        <script>
+            // Dummy function to simulate autocomplete functionality
+            document
+                .getElementById("myInput")
+                .addEventListener("input", function (e) {
+                    var val = this.value;
+                    var list = document.getElementById("autocomplete-list");
+                    list.innerHTML = ""; // Clear previous suggestions
+                    if (val.length > 0) {
+                        // Add dummy suggestions based on input value
+                        ["Apple", "Orange", "Banana", "Pineapple"].forEach(
+                            function (item) {
+                                if (
+                                    item
+                                        .toLowerCase()
+                                        .startsWith(val.toLowerCase())
+                                ) {
+                                    var div = document.createElement("div");
+                                    div.textContent = item;
+                                    list.appendChild(div);
+                                }
+                            }
+                        );
+                    } else {
+                        ["Apple", "Orange", "Banana", "Pineapple"].forEach(
+                            (item) => {
+                                var div = document.createElement("div");
+                                div.textContent = item;
+                                list.appendChild(div);
+                            }
+                        );
+                    }
+                });
+            document
+                .getElementById("myInput")
+                .addEventListener("focus", function (e) {
+                    var list = document.getElementById("autocomplete-list");
+                    list.removeAttribute("hidden");
+                });
+            document
+                .getElementById("myInput")
+                .addEventListener("focusout", (e) =>
+                    document
+                        .getElementById("autocomplete-list")
+                        .setAttribute("hidden", "true")
+                );
+        </script>
+    </body>
+</html>
